@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { CharactersService } from 'src/app/services/characters.service';
 
 
@@ -23,7 +23,7 @@ export class TableCharactersComponent implements OnInit {
   pageEvent!: PageEvent;
   currentPage = 1;
   public genderCharacter = ['Female', 'Male'];
-  subscription!: Subscription;
+  unsubscribe: Subject<void> = new Subject();
 
   constructor(private charactersService: CharactersService) {
   }
@@ -33,7 +33,7 @@ export class TableCharactersComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.subscription = this.charactersService.getCharactersSaved().subscribe(characters => {
+    this.charactersService.getCharactersSaved().subscribe(characters => {
       this.characters = characters;
       this.dataSource.data = [...this.characters];
     })
@@ -45,7 +45,7 @@ export class TableCharactersComponent implements OnInit {
    * Get characters
    */
   getCharacters() {
-    this.charactersService.getCharacters(this.currentPage).subscribe(character => {
+    this.charactersService.getCharacters(this.currentPage).pipe(takeUntil(this.unsubscribe)).subscribe(character => {
       this.charactersService.saveCharacters(character);
     })
   }
@@ -54,7 +54,7 @@ export class TableCharactersComponent implements OnInit {
    * @param event Page Event
    */
   setPage(event: PageEvent) {
-    let lastPageVisited = event.length / 6;
+    const lastPageVisited = event.length / 6;
     this.currentPage = event.pageIndex + 1;
     if (lastPageVisited < this.currentPage) this.getCharacters();
   }
@@ -111,8 +111,7 @@ export class TableCharactersComponent implements OnInit {
    * @returns characters alive no
    */
   characterAlive(alive: string, character: any) {
-    if (alive === 'yes') return character.died.includes('AC');
-    if (alive == 'no') return character.died === ''
+    return alive === 'yes' ? character.died !== '' : character.died === ''
   }
   /**
    * 
@@ -124,7 +123,8 @@ export class TableCharactersComponent implements OnInit {
 
   ngOnDestroy() {
     // Unsubscribe observable when destroy component
-    this.subscription.unsubscribe()
+    this.unsubscribe.next()
+    this.unsubscribe.complete();
   }
 
 }

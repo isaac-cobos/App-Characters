@@ -42,7 +42,7 @@ export class CharactersService {
    * @returns All characters
    */
   getCharacters(page: number) {
-    return this.http.get<any[]>(`${apiBase}${endpoints.characters}?page=${page}&pageSize=6`)
+    return this.http.get<any[]>(`${apiBase}/${endpoints.characters}?page=${page}&pageSize=6`)
   }
 
 }

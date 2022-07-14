@@ -1,3 +1,3 @@
 export const endpoints = {
-    characters: '/characters'
+    characters: 'characters'
 }
