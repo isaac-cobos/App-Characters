@@ -25,4 +25,18 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('Should create a form login', () => {
+    expect(component.loginForm.contains('email')).toBeTruthy()
+    expect(component.loginForm.contains('password')).toBeTruthy()
+  })
+
+  it('should verify the field is valid', () => {
+    component.formLoginSubmitted = true;
+    expect(component.campoNoValido('password')).toBeTruthy();
+  });
+  it('should verify the field is valid', () => {
+    component.formLoginSubmitted = false;
+    expect(component.campoNoValido('password')).toBeFalsy();
+  });
 });

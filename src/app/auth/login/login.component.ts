@@ -26,8 +26,9 @@ export class LoginComponent {
   /**
    * Do Loggin and redirect to table-characters 
    */
-  onLogin() {
-    const { email, password } = this.loginForm.value;
+  onLogin(valueForm: any) {
+    const { email, password } = valueForm
+    debugger
     this.formLoginSubmitted = true;
     if (!this.loginForm.invalid) {
       if (email === LOGIN_USER.email && password === LOGIN_USER.password) {
