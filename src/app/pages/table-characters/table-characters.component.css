@@ -1,0 +1,17 @@
+table {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.title-filter {
+    font-weight: 500;
+}
+
+.container--filter {
+    margin: 1.875rem 1.875rem 1.875rem 9.063rem;
+}
+
+.mat-elevation-z8 {
+    width: 80%;
+    margin: 0 auto;
+}

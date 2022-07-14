@@ -1,0 +1,31 @@
+<div class="vh-100 bg-gradient-blue">
+
+    <div class="container h-100">
+        <div class="center">
+            <h1>Acceso</h1>
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()" autocomplete="off">
+                <div class="txt_field">
+                    <input type="text" formControlName="email" required>
+                    <span></span>
+                    <label>Usuario</label>
+                </div>
+                <div class="row">
+                    <div class="col text-danger">
+                        <p *ngIf="campoNoValido('email')" class="mb-0">El usuario es obligatorio</p>
+                    </div>
+                </div>
+                <div class="txt_field">
+                    <input type="password" formControlName="password" required>
+                    <span></span>
+                    <label>Contraseña</label>
+                </div>
+                <div class="row">
+                    <div class="col text-danger">
+                        <p *ngIf="campoNoValido('password')">La contraseña es obligatoria</p>
+                    </div>
+                </div>
+                <input type="submit" value="Entrar">
+            </form>
+        </div>
+    </div>
+</div>

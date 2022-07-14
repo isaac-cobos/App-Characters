@@ -1,0 +1,61 @@
+<app-navbar></app-navbar>
+<div class="container--filter">
+    <div class="row">
+        <div class="d-flex justify-content-start">
+            <h3 class="title-filter">Filter options:</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="col-auto">
+                <label for="alive" class="col-form-label">Died?</label>
+            </div>
+            <div class="col-auto">
+                <select #alive id="alive" class="form-control" (change)="filteAlive(alive.value)">
+                    <option value="noFilter">No Filter</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="col-auto">
+                <label for="gender" class="col-form-label">Gender</label>
+            </div>
+            <div class="col-auto">
+                <select #gender id="gender" class="form-control" (change)="filterGender(gender.value)">
+                    <option value="noFilter">No filter</option>
+                    <option *ngFor="let gender of genderCharacter" [value]="gender">{{gender}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Gender Column -->
+        <ng-container matColumnDef="gender">
+            <th mat-header-cell *matHeaderCellDef> Gender </th>
+            <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+        </ng-container>
+
+        <!-- Alive Column -->
+        <ng-container matColumnDef="died">
+            <th mat-header-cell *matHeaderCellDef> Died </th>
+            <td mat-cell *matCellDef="let element"> {{element.died}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator #paginator [length]="dataSource.data.length" (page)="pageEvent = $event; setPage($event)"
+        [pageSize]="5" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page">
+    </mat-paginator>
+</div>
