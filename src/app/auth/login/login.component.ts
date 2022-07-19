@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LOGIN_USER } from 'src/mock/mock-login';
 import Swal from 'sweetalert2';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,9 +29,8 @@ export class LoginComponent {
    */
   onLogin(valueForm: any) {
     const { email, password } = valueForm
-    debugger
     this.formLoginSubmitted = true;
-    if (!this.loginForm.invalid) {
+    if (this.loginForm.valid) {
       if (email === LOGIN_USER.email && password === LOGIN_USER.password) {
         this.router.navigateByUrl('/table-characters');
       } else {
