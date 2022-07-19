@@ -14,7 +14,7 @@ const PAGE_SIZE = 6;
 export class CharactersService {
 
   private characters: Character[];
-  private characters$: Subject<any[]>;
+  private characters$: Subject<Character[]>;
 
   constructor(private http: HttpClient) {
     this.characters = [];
