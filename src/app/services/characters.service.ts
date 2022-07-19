@@ -45,9 +45,9 @@ export class CharactersService {
    */
   getCharacters(page: number) {
     return this.http.get<Data_Character[]>(`${apiBase}/${endpoints.characters}?page=${page}&pageSize=${PAGE_SIZE}`)
-      .pipe(map((resp: any) => {
-        const array = resp.map((element: any) => {
-          return { name: element.name, gender: element.gender, element: resp.died }
+      .pipe(map((resp: Data_Character[]) => {
+        const array = resp.map((element: Data_Character) => {
+          return { name: element.name, gender: element.gender, died: element.died }
         });
         return array;
       }))
